@@ -1,0 +1,19 @@
+{
+  "name": "ETHIO NASA — Space Flight Program",
+  "short_name": "ETHIO NASA",
+  "description": "An offline 3D satellite flight and Ethiopian highlands science mission game.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#06111e",
+  "theme_color": "#06111e",
+  "icons": [
+    {
+      "src": "./assets/satellite-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
