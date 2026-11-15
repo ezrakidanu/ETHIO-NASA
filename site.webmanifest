@@ -10,7 +10,7 @@
   "theme_color": "#06111e",
   "icons": [
     {
-      "src": "./assets/satellite-icon.png",
+      "src": "./satellite-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"

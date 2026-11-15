@@ -1,34 +1,42 @@
-# ETHIO NASA — Flight Program
+# ETHIO-NASA
 
-A single-player, offline-capable 3D satellite flight game set at a fictional Ethiopian highland launch complex. Build a satellite in the hangar, pilot a rocket through ascent, explicitly insert into orbit, and align the science instrument with an Ethiopian survey area. The title/career screen is separate from hangar and live flight. A ten-second opening splash credits **MG Studio** and developer **Ezra Kidanu**; that credit is not repeated on the career home or in-flight HUD. Ethiopian flags appear on the launch station and satellite. The home/hangar/result scene previews the deployed satellite by itself, separate from the carrier rocket; the in-flight tip banner is removed to keep the scene clear. The hangar shop and vehicle manifest reflow independently at phone sizes, with sale cards kept separate from the manifest.
+A single-player, browser-playable 3D satellite flight game set at a fictional Ethiopian highland launch complex. Build a satellite, pilot a rocket through ascent, explicitly insert into orbit, and align the science instrument with a survey area. The static browser build and Android APK use the same game source; browser keyboard/mouse input supplements the existing touch controls.
 
-## Start playing
+## Judge Quick-Access Links
 
-On Android, install `ethio-nasa-playable.apk` and open **ETHIO NASA**. The app keeps career data on that device; no login or network connection is needed. If Android reports a signature conflict with an older debug installation, remove the old installation and then install this refreshed APK. The editable source is a browser game with its local files beside `index.html`; it is not an Android Studio/Gradle project. Use a browser with WebGL enabled.
+- **[Play ETHIO-NASA in your browser](https://ezrakidanu.github.io/ETHIO-NASA/)** — GitHub Pages deployment.
+- **[Download the Android APK](https://github.com/ezrakidanu/ETHIO-NASA/blob/main/ethio-nasa-playable%20%282%29.apk?raw=true)** — APK retained in this repository.
+- **30-second gameplay demo:** `[INSERT_YOUTUBE_DEMO_LINK]`
 
-Choose **Enter the Hangar**, select a contract, and inspect the manifest, part models, specifications, prices and operation fee. New careers start with **$250,000,000 in fictional game dollars** and starter hardware. Buy or equip a bus structure/material, launch motor, power system and science instrument. A purchase deducts its price immediately; owned hardware remains in the inventory on every flight. Launch-operation costs are displayed in advance and charged only when the player presses **Authorize Launch**. A successful science capture credits the contract payment; fitting its recommended instrument adds a $2,000,000 bonus. Failed/aborted flights do not pay a contract reward. Funds and equipment persist in this browser/app installation.
+## Judge Quick-Start & Controls
 
-## Controls and mission flow
+1. Choose **Enter the Hangar** and select **Highland Imaging Survey** or **Space Weather Watch**. Review the manifest, hardware prices, and operation fee.
+2. Buy or equip the satellite bus, launch motor, power system, and science instrument. A recommended instrument earns a **$2,000,000 game-dollar bonus** after a successful capture. Launch-operation costs are charged only when you authorize launch.
+3. During ascent, hold **HOLD THRUST**, or hold **Space/W** on a keyboard. Steer with the on-screen arrows or keyboard arrows; drag the 3D flight scene with a mouse or touch to change attitude. At **100 km**, choose **Deploy + Insert Orbit**, then align the instrument over the highlighted survey area and capture the science scene. In orbit, **Space/W** and **S** command RCS forward/back. **Escape** pauses and **F** attempts a science capture.
 
-During ascent, hold **HOLD THRUST** (touch) or **Space/W** (keyboard) to run the main engine. Letting go stops the engine and its propellant use. Use the on-screen arrow pad or keyboard arrows to pitch and yaw; dragging the flight view also changes attitude. The camera follows the rocket. Reach **100 km** to reveal **Deploy + Insert Orbit** in the mission panel; staging detaches the carrier rocket before the satellite flies on alone. That deliberate command separates the carrier and spends the displayed **6% reserve** to assist with circular-orbit insertion.
+Career funds and equipment are saved locally in the browser on that device. No account is required. The app’s scripts and Three.js library are bundled locally. Open the hosted page once while online, or serve/download the same static files locally; browser privacy settings or storage cleanup may clear the local career save. WebGL is required.
 
-In orbit, steer the 3D satellite with the same arrows or drag. Hold **RCS FWD/BACK** on screen, or **Space/W/S** on keyboard, to command small translations. Orient the underside instrument toward the highlighted Ethiopian survey region. Capture becomes available when sensor alignment reaches **99.5%**. **Escape** or **Pause** stops flight controls; resume, or explicitly abort/return to the hangar. Hardware is not consumed. Propellant is consumed only during a held main-engine or RCS command, or during the clearly labeled orbit-insertion action. The game disables browser text-selection and long-press copy menus on its play surface.
+## NASA mission context and data sources
 
-## Simulation and challenge context
+The game uses two fictional contract profiles as educational mission concepts, not as recreations of NASA flight plans or telemetry:
 
-The renderer uses a consistent 1:50 display-world-to-metre position scale; velocity and altitude are calculated from the same flight state. Gravity and atmospheric drag affect flight but do not consume propellant. Orbit insertion is an intentional, assisted gameplay action rather than an automatic fuel loss. Component performance/prices, mission fees and rewards are **fictional game values**, not aerospace-vendor prices or flight guidance. Orbital dynamics are simplified for play and learning; this is not flight software or a validated real-world mission simulator.
+- **Highland Imaging Survey** represents an Earth-observation pass-window concept over the Ethiopian Highlands. Its broad inspiration is NASA Landsat and Terra remote sensing. The game uses a fictional survey target and does not import NASA imagery, ephemerides, or actual pass-window data. NASA describes Landsat 8 in a 705 km near-polar, sun-synchronous orbit and Terra in a 705 km sun-synchronous orbit; those real spacecraft parameters are context, not the game’s simulated trajectory. [Landsat 8](https://science.nasa.gov/mission/landsat-8/) · [Terra](https://terra.nasa.gov/about)
+- **Space Weather Watch** is a fictional near-Earth magnetic-survey objective inspired by NASA heliophysics missions, including the Solar Dynamics Observatory (SDO) and Parker Solar Probe. It does not use NASA telemetry or reproduce their flight paths. Parker Solar Probe follows a solar orbit, rather than an Earth-observation orbit. [SDO](https://science.nasa.gov/mission/sdo/) · [Parker Solar Probe](https://science.nasa.gov/mission/parker-solar-probe/)
 
-The project is designed around the NASA Space Apps Challenge 2026 **Space Mission Design Game** prompt: design trade-offs, a playable simulation and a mission evaluation loop. It is an independent entry and is **not endorsed by NASA**; no national or global award is promised or guaranteed. The project uses original procedural 3D rocket, satellite and launch-site models and does not copy proprietary Spaceflight Simulator 2 assets.
+Earth reference context includes JPL’s published planetary physical parameters. The current game code uses a conventional Earth gravitational parameter, an average Earth-radius value, and a simplified exponential atmosphere. These are simulation inputs, not imported live NASA data. [JPL Planetary Physical Parameters](https://ssd.jpl.nasa.gov/planets/phys_par.html)
 
-Official challenge description: https://www.spaceappschallenge.org/2026/challenges/space-mission-design-game/
+## Technical architecture and limitations
 
-## Source files
+ETHIO-NASA is a static HTML/CSS/JavaScript browser game rendered with bundled Three.js and WebGL. `catalog.js` defines the contracts, parts, purchases, rewards, and local career save. `physics.js` updates the game flight state. `scene.js` builds the procedural Earth, launch complex, rocket, satellite, and camera. `ui.js` and `app.js` implement the interface, mission flow, keyboard and pointer input, and touch controls. GitHub Pages serves the same root-level files used in the supplied Capacitor APK; the Pages workflow stages only those game assets and leaves the APK in the repository.
 
-- `index.html` — title, hangar, HUD and responsive layout.
-- `site.webmanifest` — ETHIO NASA browser-install metadata using the satellite icon.
-- `src/catalog.js` — local save, dollars, components, purchases and contract rewards.
-- `src/physics.js` — metre/second flight state, gravity, thrust, drag and orbit insertion.
-- `src/scene.js` — offline Three.js Earth, highland launch site, procedural vehicles and follow camera.
-- `src/ui.js` / `src/app.js` — screens, controls, input, objectives and mission flow.
-- `assets/three.min.js` and `assets/THREE-LICENSE.txt` — locally bundled Three.js runtime and MIT notice for offline play.
-- `assets/satellite-icon.png` — satellite favicon/browser-install icon; the native Android launcher also uses the satellite icon.
+The current `physics.js` is a gameplay approximation using central inverse-square gravity, a game-scale atmosphere with an 8,500 m exponential scale height, and a simple time-step update. It does **not** implement a 120 Hz RK4 propagator, J2 perturbations, or Keplerian trajectory predictions. Orbit insertion is an assisted gameplay action. The simulation is educational and is not validated flight dynamics or suitable for mission planning. Part performance, costs, operation fees, and rewards are fictional game values.
+
+## Run locally
+
+Serve this directory from a local HTTP server (for example, `python3 -m http.server 8000`) and open `http://localhost:8000/`. The app is a static site; there is no Node, Gradle, or backend requirement for browser play. The Android package is `ethio-nasa-playable (2).apk` and remains available in the repository.
+
+## Credits and challenge context
+
+The ten-second opening splash credits **MG Studio** and developer **Ezra Kidanu**. The game includes Ethiopian flags on the launch station and satellite. Three.js is distributed under the MIT License; see [`THREE-LICENSE.txt`](THREE-LICENSE.txt).
+
+ETHIO-NASA is an independent educational game created for the NASA Space Apps Challenge. It is not endorsed by NASA and makes no award guarantee. [Challenge description](https://www.spaceappschallenge.org/2026/challenges/space-mission-design-game/)
